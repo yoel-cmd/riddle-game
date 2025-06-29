@@ -2,7 +2,10 @@
 import val1 from './r1.js';
 import val2 from './r2.js';
 
-export default [val1,val2];
+const res=[val1,val2];
+
+export default  res
+
 
 
 
