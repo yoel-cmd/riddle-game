@@ -1,8 +1,5 @@
 import readlineSync from 'readline-sync';
-
-
-
-class Riddle{
+export default class Riddle{
     constructor({id,name,taskDescription,corectAnswer}){
         this.id=id;
         this.name=name;
@@ -11,10 +8,14 @@ class Riddle{
     }
     ask(){
         console.log(this.taskDescription); 
-        while(true){
-            const res=readlineSync.question('enter your answer')
-            
+        let res=readlineSync.question('enter your answer')
+        while(this.corectAnswer!=res){
+            console.log(" Wrong answer"); 
+            console.log(this.taskDescription); 
+            res=readlineSync.question('enter your answer') 
         }
+        console.log("corect answer");
+        
     }
 }
 
