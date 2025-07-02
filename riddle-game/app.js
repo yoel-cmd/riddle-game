@@ -6,9 +6,9 @@
  * - Records results and shows the player's average time.
  */
 
-import readlineSync from './riddles/classes/node_modules/readline-sync/lib/readline-sync.js';
-import player from './riddles/classes/Player.js';
-import riddle from './riddles/classes/Riddle.js';
+import readlineSync from './node_modules/readline-sync/lib/readline-sync.js';
+import player from './classes/Player.js';
+import riddle from './classes/Riddle.js';
 import _import from './riddles/import.js';
 
 let namePlayer = readlineSync.question("enter your name");
