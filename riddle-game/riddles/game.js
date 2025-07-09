@@ -10,7 +10,6 @@ const pathPlayer='../DB/PlayersDB.txt';
 import readlineSync from '../node_modules/readline-sync/lib/readline-sync.js';
 import player from '../classes/Player.js';
 import riddle from '../classes/Riddle.js';
-import _import from '../riddles/import.js';
 import {creatRiddle,creatPlayer,updateRiddle,deleteRiddle ,readRiddle,createAll} from './CRUD.js'
 
 
@@ -26,6 +25,7 @@ export async function startGame() {
         riddles = new riddle(arr[i]);
         riddles.ask();
         person.recordTime(starst);
+        person.updatAvg()
     }
     await createAll(pathPlayer,()=> creatPlayer(person));
     // console.log(person);
