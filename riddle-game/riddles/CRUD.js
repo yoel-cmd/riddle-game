@@ -66,7 +66,7 @@ export async function deleteRiddle (path){
 
 export async function readRiddle(path){
     try{
-    const data=await readFile(path,'utf8');
+    const data = await readFile(path,'utf8');
         return data
     }
     catch(err){
