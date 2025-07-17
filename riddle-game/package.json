@@ -3,15 +3,15 @@
   "version": "1.0.0",
   "description": "Riddle Game - Project Guide\r Overview\r A riddle game where the user enters their name, a player instance is created with a list of riddles. For each riddle, the user is prompted to answer correctly (using the ask function which does not end until the correct answer is given). During the game, the response times are recorded, and at the end, the average time the player took to solve the riddles is calculated.",
   "main": "app.js",
-
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "type":"module",
+  "type": "module",
   "license": "ISC",
   "dependencies": {
+    "express": "^5.1.0",
     "readline-sync": "^1.4.10"
   }
 }
