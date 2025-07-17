@@ -16,11 +16,11 @@ export default class Riddle {
      */
     ask() {
         console.log(this.taskDescription);
-        let res = readlineSync.question('enter your answer');
+        let res = readlineSync.question('enter your answer: ');
         while (this.corectAnswer != res) {
             console.log("Wrong answer");
             console.log(this.taskDescription);
-            res = readlineSync.question('enter your answer');
+            res = readlineSync.question('enter your answer: ');
         }
         console.log("correct answer");
     }

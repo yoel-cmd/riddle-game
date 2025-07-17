@@ -1,4 +1,4 @@
-import { startGame } from "./riddles/game.js"
+import { startGame } from "./clinte/riddles/game.js"
 
 
 startGame();

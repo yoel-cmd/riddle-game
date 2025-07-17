@@ -15,7 +15,7 @@ export default class Player {
      */
     recordTime(start) {
         const time = +((Date.now() - start) / 1000).toFixed(2);
-        this.total += time;
+        this.total = +(this.total + time).toFixed(2);
         this.arrTime.push(time);
     }
 
@@ -23,8 +23,12 @@ export default class Player {
      * Calculates and returns the average time.
      * @returns {number} Average time in seconds.
      */
-    showStatus() {
-        this.avg = this.total / this.arrTime.length;
-        return this.avg.toFixed(2);
-    }
+    updatAvg() {
+    this.avg = +(this.total / this.arrTime.length).toFixed(2); 
+}
+
+    // showStatus() {
+    //     this.avg = this.total / this.arrTime.length;
+    //     return this.avg.toFixed(2);
+    // }
 }
