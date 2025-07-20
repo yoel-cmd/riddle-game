@@ -7,12 +7,14 @@
  */
 // const pathRiddle = '../DB/RiddlesDB.txt';
 // const pathPlayer = '../DB/PlayersDB.txt';
-const pathRiddle = 'http://localhost:3000/create-ridlle'
+const pathcreateRiddle = 'http://localhost:3000/create-ridlle'
 const fetchPlayer = 'http://localhost:3000/creat-palyer'
+const pathDeleteRiddle='http://localhost:3000/delete-riddle/'
+const pathUpdateRiddle='http://localhost:3000/update-riddle/'
 import readlineSync from 'readline-sync';
 import player from '../classes/Player.js';
 import riddle from '../classes/Riddle.js';
-import { createAllserves, updateRiddle, deleteRiddle, creatPlayer, readRiddleServer, creatRiddle } from './CRUD.js'
+import { createAllserves, updateRiddleServer, deleteRiddleServer, creatPlayer, readRiddleServer, creatRiddle } from './CRUD.js'
 
 
 
@@ -53,13 +55,13 @@ async function crudMenu() {
       break;
     case '2':
       const obj =  creatRiddle();
-      await createAllserves(pathRiddle, obj);
+      await createAllserves(pathcreateRiddle, obj);
       break;
     case '3':
-      // await deleteRiddle(pathRiddle);
+      await deleteRiddleServer(pathDeleteRiddle);
       break;
     case '4':
-      // await updateRiddle(pathRiddle);
+      await updateRiddleServer(pathUpdateRiddle);
       break;
     case '5':
       mainMenu();
