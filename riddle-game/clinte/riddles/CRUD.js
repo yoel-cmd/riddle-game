@@ -5,7 +5,7 @@ const pathRiddle = '../DB/RiddlesDB.txt';
 const pathPlayer = '../DB/PlayersDB.txt';
 
 
-export async function creatRiddle() {
+export  function creatRiddle() {
     const nameRiddle = readlineSync.question('enter your name riddle: ')
     const Description = readlineSync.question('enter your riddle: ')
     const Answer = readlineSync.question('enter answer: ')
@@ -92,27 +92,19 @@ export async function createAll(path, fn) {
 }
 
 //--------------------------------------------------------
-export async function createAllserves(fatch, obj) {
-    // const data = await fn();
-    const response = await fetch(fatch, {
+export async function createAllserves(path, obj) {
+    const response = await fetch(path, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body:JSON.stringify(obj)
+        body: JSON.stringify(obj)
     });
-
+    console.log("body frome send>>",obj);
+    
     const result = await response.json();
-    console.log(result);
+    console.log("res>>",result);
 }
-
-
-
-
-
-
-
-
 
 
 //---------------------------------------------------------------------

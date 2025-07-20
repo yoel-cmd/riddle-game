@@ -7,7 +7,7 @@
  */
 // const pathRiddle = '../DB/RiddlesDB.txt';
 // const pathPlayer = '../DB/PlayersDB.txt';
-const fetchRidlle = 'http://localhost:3000/creat-ridlle'
+const pathRiddle = 'http://localhost:3000/create-ridlle'
 const fetchPlayer = 'http://localhost:3000/creat-palyer'
 import readlineSync from 'readline-sync';
 import player from '../classes/Player.js';
@@ -52,8 +52,8 @@ async function crudMenu() {
       console.log(await readRiddleServer());//read riddel server
       break;
     case '2':
-      const obj = creatRiddle();
-      await createAllserves(fetchRidlle, obj);
+      const obj =  creatRiddle();
+      await createAllserves(pathRiddle, obj);
       break;
     case '3':
       // await deleteRiddle(pathRiddle);
