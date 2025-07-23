@@ -7,6 +7,7 @@ export default class Player {
         this.arrTime = [];
         this.avg = 0;
         this.total = 0;
+        this.record=0
     }
 
     /**
