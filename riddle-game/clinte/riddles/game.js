@@ -14,7 +14,7 @@ const pathUpdateRiddle = 'http://localhost:3000/update-riddle/'
 import readlineSync from 'readline-sync';
 import player from '../classes/Player.js';
 import riddle from '../classes/Riddle.js';
-import { createAllserves, updateRiddleServer, deleteRiddleServer, creatPlayer, readRiddleServer, creatRiddle, checkIfExsist, updateRecord, checkRecord, lidderBord } from './CRUD.js'
+import { createAllserves, updateRiddleServer, deleteRiddleServer, creatPlayer, Login, readRiddleServer, creatRiddle, Singing, checkIfExsist, updateRecord, checkRecord, lidderBord } from './CRUD.js'
 
 
 
@@ -94,7 +94,20 @@ async function mainMenu() {
 
   switch (choice) {
     case '1':
-      startGame();
+      const loginOrSignup = readlineSync.question("Do you want to [1] Login or [2] Signup? ");
+      if (loginOrSignup === '1') {
+        const name = readlineSync.question('enter your name: ')
+        const password = readlineSync.question('enter your password: ')
+        await Login(name, password)
+      } else if (loginOrSignup === '2') {
+        const name = readlineSync.question('enter your name: ')
+        const password = readlineSync.question('enter your password: ')
+        await Singing(name, password);
+
+      } else {
+        console.log("Invalid choice, returning to main menu.");
+        return mainMenu();
+      }
       break;
     case '2':
       crudMenu();
@@ -102,7 +115,7 @@ async function mainMenu() {
     case '3':
       const val = await lidderBord()
       console.log(val);
-      
+
       break;
     case '4':
       exit();

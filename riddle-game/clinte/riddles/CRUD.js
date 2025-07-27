@@ -1,4 +1,6 @@
+import { response } from "express";
 import { readFile, writeFile } from "node:fs/promises";
+import { json } from "node:stream/consumers";
 import readlineSync from 'readline-sync';
 
 const pathRiddle = '../DB/RiddlesDB.txt';
@@ -105,17 +107,14 @@ export async function createAllserves(path, obj) {
 }
 //-----------------------------------------------------------------player--------------------------------------------------
 //-----------------create player -----------------------------
-export async function creatPlayer(path, name, avg, record) {
-    const response = await fetch(path, {
+export async function creatPlayer(obj) {
+    const response = await fetch('http://localhost:3000/siging', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            name: name,
-            avg: avg,
-            record: record
-        })
+        body: JSON.stringify(obj
+        )
     });
 
     const result = await response.json();
@@ -171,6 +170,7 @@ export async function updateRecord(name, property, value) {
 //----------------------------lider bord------------------------------------------
 export async function lidderBord() {
     try {
+
         const val = await fetch('http://localhost:3000/players-by-record')
         const data = await val.json();
         return data
@@ -180,4 +180,45 @@ export async function lidderBord() {
     }
 
 }
+//----------------------------Login----post-----------------------------------
+export async function Login(name,password) {
+    try {
+        const response = await fetch('http://localhost:3000/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                password: password
+            })
+        });
+        const val = await response.json()
+        console.log(val);
 
+
+    } catch (error) {
+        console.log("error: ", error);
+    }
+}
+//----------------------------Singing---post------------------------------------
+export async function Singing(name,password) {
+    
+    try {
+        const response = await fetch('http://localhost:3000/siging', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                password: password
+            })
+        });
+        const val = await response.json()
+        console.log(val);
+
+    } catch (error) {
+        console.error("err: ", error);
+    }
+}
