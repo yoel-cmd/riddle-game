@@ -4,6 +4,7 @@ import readlineSync from 'readline-sync';
 const pathRiddle = '../DB/RiddlesDB.txt';
 const pathPlayer = '../DB/PlayersDB.txt';
 
+//-----------------------------------------------------------------riddle--------------------------------------------------
 
 export function creatRiddle() {
     const nameRiddle = readlineSync.question('enter your name riddle: ')
@@ -15,11 +16,6 @@ export function creatRiddle() {
         corectAnswer: Answer
     }
     return riddle;
-}
-
-
-export async function creatPlayer(player) {
-    return player;
 }
 
 
@@ -48,7 +44,7 @@ export async function updateRiddle(path) {
 //-----------------delete to server-----------------------------
 
 export async function deleteRiddleServer(path) {
-    const id= readlineSync.question('enter id to delete: ')
+    const id = readlineSync.question('enter id to delete: ')
     try {
         const response = await fetch(path + id, {
             method: "DELETE",
@@ -61,12 +57,12 @@ export async function deleteRiddleServer(path) {
         console.error('err', err.message)
     }
 }
-//-----------------update to server-----------------------------
+//-----------------update riddle-----------------------------
 
 export async function updateRiddleServer(path) {
-    
-    const id= readlineSync.question('enter id to update : ')
-    const obj =creatRiddle('enter id to update')
+
+    const id = readlineSync.question('enter id to update : ')
+    const obj = creatRiddle('enter id to update')
     try {
         const response = await fetch(path + id, {
             method: "PUT",
@@ -81,23 +77,7 @@ export async function updateRiddleServer(path) {
     }
 }
 
-//-----------------create to server-----------------------------
-export async function createAllserves(path, obj) {
-    const response = await fetch(path, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(obj)
-    });
-    console.log("body frome send>>", obj);
-    
-    const result = await response.json();
-    console.log("res>>", result);
-}
-
-
-//---------------------------------------------------------------------
+//----------------read riddle server----------------------------------
 
 export async function readRiddleServer() {
     try {
@@ -109,68 +89,95 @@ export async function readRiddleServer() {
         console.log('err', err.message);
     }
 }
+//-----------------create all to server-----------------------------
+export async function createAllserves(path, obj) {
+    const response = await fetch(path, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(obj)
+    });
+    console.log("body frome send>>", obj);
 
+    const result = await response.json();
+    console.log("res>>", result);
+}
+//-----------------------------------------------------------------player--------------------------------------------------
+//-----------------create player -----------------------------
+export async function creatPlayer(path, name, avg, record) {
+    const response = await fetch(path, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: name,
+            avg: avg,
+            record: record
+        })
+    });
 
+    const result = await response.json();
+    console.log("res>>", result);
+}
 
+//----------------check if exsist----------------------------------
+export async function checkIfExsist(name) {
+    try {
+        const response = await fetch(`http://localhost:3000/check-player/${name}`)
+        const data = await response.json();
+        return data.length > 0;
+    } catch (error) {
+        console.error('err', error.message)
+    }
+}
+//----------------check if record----------------------------------
+export async function checkRecord(name, record) {
+    try {
+        const response = await fetch(`http://localhost:3000/check-player/${name}`)
+        const data = await response.json();
+        if (data[0].record <= record)
+            return true
+        else
+            return false
+    } catch (error) {
+        console.error('err', error.message)
+    }
+}
+//------------------update record for player----------------------------------
+export async function updateRecord(name, property, value) {
+    try {
+        console.log('name:', name, 'property:', property, 'value:', value);
 
+        const val = await fetch('http://localhost:3000/update-record', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                property: property,
+                value: value
+            })
+        });
+        const res = await val.text()
+        console.log(res);
+    } catch (error) {
+        console.log('error', error.message);
+    }
+}
 
+//----------------------------lider bord------------------------------------------
+export async function lidderBord() {
+    try {
+        const val = await fetch('http://localhost:3000/players-by-record')
+        const data = await val.json();
+        return data
+    } catch (error) {
+        console.error('err', error.message)
 
-//--------------------------no server---------------------------------------
+    }
 
-// export async function readRiddle(path) {
-    //     try {
-        //         const data = await readFile(path, 'utf8');
-        //         return data
-        //     }
-        //     catch (err) {
-            //         console.log('err', err.message);
-            //     }
-            // }
-            
-            // export async function createAll(path, fn) {
-                //     try {
-                    //         const res = await fn()
-                    //         const data = await readFile(path, 'utf8')
-                    //         const jsData = JSON.parse(data)
-                    
-                    //         res.id = jsData.length === 0 ? 1 : jsData[jsData.length - 1].id + 1;
-                    //         jsData.push(res)
-                    
-                    //         await writeFile(path, JSON.stringify(jsData, null, 2))
-                    //         return 'create'
-                    
-                    //     } catch (err) {
-                        //         console.log("error", err.message);
-                        //     }
-                        // }
-                        
-                        
-                        // export async function readRiddle(path) {
-                            //     try {
-                                //         const data = await readFile(path, 'utf8');
-                                //         return data
-                                //     }
-                                //     catch (err) {
-                                    //         console.log('err', err.message);
-                                    //     }
-                                    // }
+}
 
-                            
-                                    // export async function deleteRiddle(path) {
-                                    //     const id =readlineSync('enter id to delete')
-                                    //     try {
-                                    //         const data = await readFile(path, 'utf8')
-                                    //         const arr = JSON.parse(data)
-                                    //         const id = readlineSync.question("enrer id riddle: ")
-                                    //         for (let index = 0; index < arr.length; index++) {
-                                    //             if (arr[index].id == id) {
-                                    //                 arr.splice(index, 1)
-                                    //                 break
-                                    //             }
-                                    //         }
-                                    //         await writeFile(path, JSON.stringify(arr, null, 2))
-                                    //         return 'delete'
-                                    //     } catch (err) {
-                                    //         console.error('err', err.message)
-                                    //     }
-                                    // }
