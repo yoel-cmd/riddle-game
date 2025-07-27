@@ -2,9 +2,11 @@
  * Represents a player in the riddle game.
  */
 export default class Player {
-    constructor(name) {
+    constructor(name,password) {
         this.name = name;
         this.arrTime = [];
+        this.password=password;
+        this.rol="user"
         this.avg = 0;
         this.total = 0;
         this.record=0
@@ -19,7 +21,7 @@ export default class Player {
         this.total = +(this.total + time).toFixed(2);
         this.arrTime.push(time);
     }
-
+   
     /**
      * Calculates and returns the average time.
      * @returns {number} Average time in seconds.
