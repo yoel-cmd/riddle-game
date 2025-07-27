@@ -8,13 +8,13 @@
 // const pathRiddle = '../DB/RiddlesDB.txt';
 // const pathPlayer = '../DB/PlayersDB.txt';
 const pathcreateRiddle = 'http://localhost:3000/create-ridlle'
-const fetchPlayer = 'http://localhost:3000/creat-palyer'
-const pathDeleteRiddle='http://localhost:3000/delete-riddle/'
-const pathUpdateRiddle='http://localhost:3000/update-riddle/'
+const fetchPlayer = 'http://localhost:3000/create-palyer'
+const pathDeleteRiddle = 'http://localhost:3000/delete-riddle/'
+const pathUpdateRiddle = 'http://localhost:3000/update-riddle/'
 import readlineSync from 'readline-sync';
 import player from '../classes/Player.js';
 import riddle from '../classes/Riddle.js';
-import { createAllserves, updateRiddleServer, deleteRiddleServer, creatPlayer, readRiddleServer, creatRiddle } from './CRUD.js'
+import { createAllserves, updateRiddleServer, deleteRiddleServer, creatPlayer, readRiddleServer, creatRiddle, checkIfExsist, updateRecord, checkRecord, lidderBord } from './CRUD.js'
 
 
 
@@ -32,10 +32,14 @@ export async function startGame() {
     person.recordTime(starst);
     person.updatAvg()
   }
-  console.log(person)
-  await createAllserves(fetchPlayer, person);
-  // console.log(person);
-  // console.log(person.showStatus());
+  if (await checkIfExsist(person.name)) {
+    if (await checkRecord(person.name, person.avg))
+      await updateRecord(person.name, "record", person.avg)
+  }
+  else {
+    await creatPlayer(fetchPlayer, person.name, person.avg, person.record);
+  }
+
 }
 
 
@@ -54,7 +58,7 @@ async function crudMenu() {
       console.log(await readRiddleServer());//read riddel server
       break;
     case '2':
-      const obj =  creatRiddle();
+      const obj = creatRiddle();
       await createAllserves(pathcreateRiddle, obj);
       break;
     case '3':
@@ -79,11 +83,12 @@ function exit() {
 }
 
 
-function mainMenu() {
+async function mainMenu() {
   console.log("Choose an option: ");
   console.log("1. Game");
   console.log("2. CRUD");
-  console.log("3. Exit");
+  console.log("3. leaderbord");
+  console.log("4. Exit");
 
   const choice = readlineSync.question("Enter option number: ");
 
@@ -95,6 +100,11 @@ function mainMenu() {
       crudMenu();
       break;
     case '3':
+      const val = await lidderBord()
+      console.log(val);
+      
+      break;
+    case '4':
       exit();
       break;
     default:
